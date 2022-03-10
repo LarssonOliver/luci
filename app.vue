@@ -1,0 +1,93 @@
+<template>
+  <Swiper
+    :navigation="true"
+    loop
+    :modules="modules"
+    :autoplay="{ delay: 10000, disableOnInteraction: false }"
+  >
+    <SwiperSlide>
+      <img src="/test.jpg" />
+    </SwiperSlide>
+    <SwiperSlide>
+      <img src="/test2.jpeg" />
+    </SwiperSlide>
+    <SwiperSlide>
+      <img src="/test3.webp" />
+    </SwiperSlide>
+  </Swiper>
+</template>
+
+<script lang="ts">
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation, Autoplay } from "swiper";
+
+import "swiper/css";
+import "swiper/css/navigation";
+
+export default defineComponent({
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  setup() {
+    return {
+      modules: [Navigation, Autoplay],
+    };
+  },
+});
+</script>
+
+<style>
+#app {
+  height: 100%;
+}
+html,
+body {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  height: 100%;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+</style>
