@@ -33,7 +33,7 @@ const shuffle = (array: any[]) => {
   return array;
 };
 
-export default defineComponent({
+export default {
   head() {
     return {
       title: "Luciffer",
@@ -51,7 +51,7 @@ export default defineComponent({
       modules: [Navigation, Autoplay, Lazy],
     };
   },
-});
+};
 </script>
 
 <style>

@@ -1,0 +1,9 @@
+Dockerfile
+.dockerignore
+node_modules
+*.log
+README.md
+.nuxt
+nuxt.d.ts
+.output
+.env
