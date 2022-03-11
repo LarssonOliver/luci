@@ -4,48 +4,56 @@
     loop
     :modules="modules"
     :autoplay="{ delay: 10000, disableOnInteraction: false }"
+    :lazy="{
+      loadPrevNext: true,
+      loadPrevNextAmount: 5,
+    }"
   >
-    <SwiperSlide>
-      <img src="/test.jpg" />
-    </SwiperSlide>
-    <SwiperSlide>
-      <img src="/test2.jpeg" />
-    </SwiperSlide>
-    <SwiperSlide>
-      <img src="/test3.webp" />
+    <SwiperSlide v-for="n in count">
+      <img :data-src="`/api/img/${n - 1}`" class="swiper-lazy" />
+      <div class="swiper-lazy-preloader swiper-lazy-preloader-grey" />
     </SwiperSlide>
   </Swiper>
 </template>
 
 <script lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Navigation, Autoplay } from "swiper";
+import { Navigation, Autoplay, Lazy } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/lazy";
+
+interface CountResponse {
+  count: number;
+}
 
 export default defineComponent({
   components: {
     Swiper,
     SwiperSlide,
   },
-  setup() {
+  async setup() {
+    const { data } = await useFetch("/api/img/count");
+    const { count } = data.value as CountResponse;
+
     return {
-      modules: [Navigation, Autoplay],
+      count,
+      modules: [Navigation, Autoplay, Lazy],
     };
   },
 });
 </script>
 
 <style>
-#app {
+#__nuxt {
   height: 100%;
 }
 html,
 body {
   position: relative;
-  height: 100%;
   overflow: hidden;
+  height: 100%;
 }
 
 body {
@@ -65,9 +73,6 @@ body {
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
-
-  height: 100%;
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -88,6 +93,30 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: contain;
+  background-color: black;
+  border: none;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: gray;
+}
+
+.swiper-lazy-preloader-grey {
+  --swiper-preloader-color: grey;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
