@@ -2,4 +2,4 @@
 
 Nuxt 3.
 
-Deployed: [luci.larssonoliver.com](luci.larssonoliver.com)
+Deployed: [luci.larssonoliver.com](https://luci.larssonoliver.com)
